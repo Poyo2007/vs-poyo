@@ -1,5 +1,8 @@
 package;
 
+#if desktop
+import Discord.DiscordClient;
+#end
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.transition.FlxTransitionableState;
@@ -12,7 +15,6 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import lime.net.curl.CURLCode;
-import ui.FlxVirtualPad;
 
 using StringTools;
 
@@ -20,14 +22,13 @@ class StoryMenuState extends MusicBeatState
 {
 	var scoreText:FlxText;
 
-
 	var weekData:Array<Dynamic> = [
 		['Tutorial'],
-    ['Song1'],
+		['Song1'],
 	];
 	var curDifficulty:Int = 1;
 
-	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true];
+	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true, true];
 
 	var weekCharacters:Array<Dynamic> = [
 		['dad', 'bf', 'gf'],
@@ -36,17 +37,19 @@ class StoryMenuState extends MusicBeatState
 		['pico', 'bf', 'gf'],
 		['mom', 'bf', 'gf'],
 		['parents-christmas', 'bf', 'gf'],
-		['senpai', 'bf', 'gf']
+		['senpai', 'bf', 'gf'],
+		['tankman', 'bf', 'gf']
 	];
 
 	var weekNames:Array<String> = [
-		"",
-		"Dripped Out Fucker",
+		"How To Funk",
+		"he got the drip",
 		"Spooky Month",
 		"PICO",
 		"MOMMY MUST MURDER",
 		"RED SNOW",
-		"hating simulator ft. moawling"
+		"hating simulator ft. moawling",
+		"TANKMAN"
 	];
 
 	var txtWeekTitle:FlxText;
@@ -65,13 +68,8 @@ class StoryMenuState extends MusicBeatState
 	var leftArrow:FlxSprite;
 	var rightArrow:FlxSprite;
 
-	var _pad:FlxVirtualPad;
-
 	override function create()
 	{
-		Paths.clearStoredMemory();
-		Paths.clearUnusedMemory();
-		
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
 
@@ -111,6 +109,11 @@ class StoryMenuState extends MusicBeatState
 		add(grpLocks);
 
 		trace("Line 70");
+		
+		#if desktop
+		// Updating Discord Rich Presence
+		DiscordClient.changePresence("In the Menus", null);
+		#end
 
 		for (i in 0...weekData.length)
 		{
@@ -148,7 +151,6 @@ class StoryMenuState extends MusicBeatState
 				case 'dad':
 					weekCharacterThing.setGraphicSize(Std.int(weekCharacterThing.width * 0.5));
 					weekCharacterThing.updateHitbox();
-
 				case 'bf':
 					weekCharacterThing.setGraphicSize(Std.int(weekCharacterThing.width * 0.9));
 					weekCharacterThing.updateHitbox();
@@ -213,11 +215,9 @@ class StoryMenuState extends MusicBeatState
 
 		trace("Line 165");
 
-		_pad = new FlxVirtualPad(FULL, A_B);
-    	_pad.alpha = 0.75;
-    	#if mobile
-    	this.add(_pad);
-    	#end
+		#if mobileC
+		addVirtualPad(FULL, A_B);
+		#end
 
 		super.create();
 	}
@@ -241,60 +241,43 @@ class StoryMenuState extends MusicBeatState
 			lock.y = grpWeekText.members[lock.ID].y;
 		});
 
-		var UP_P = _pad.buttonUp.justPressed || controls.UP_P;
-		var RIGHT_P = _pad.buttonRight.justPressed || controls.RIGHT_P;
-		var DOWN_P = _pad.buttonDown.justPressed || controls.DOWN_P;
-		var LEFT_P = _pad.buttonLeft.justPressed || controls.LEFT_P;
-		
-		var RIGHT = _pad.buttonRight.pressed;
-		var LEFT = _pad.buttonLeft.pressed;
-
-		var ACCEPT = _pad.buttonA.justPressed || controls.ACCEPT;
-		var BACK = _pad.buttonB.justPressed || controls.BACK;
-
-		#if android
-			var BACK = _pad.buttonB.justPressed || FlxG.android.justReleased.BACK;
-		#else
-			var BACK = _pad.buttonB.justPressed;
-		#end
-
 		if (!movedBack)
 		{
 			if (!selectedWeek)
 			{
-				if (UP_P)
+				if (controls.UP_P)
 				{
 					changeWeek(-1);
 				}
 
-				if (DOWN_P)
+				if (controls.DOWN_P)
 				{
 					changeWeek(1);
 				}
 
-				if (RIGHT_P)
+				if (controls.RIGHT)
 					rightArrow.animation.play('press')
 				else
 					rightArrow.animation.play('idle');
 
-				if (LEFT_P)
+				if (controls.LEFT)
 					leftArrow.animation.play('press');
 				else
 					leftArrow.animation.play('idle');
 
-				if (RIGHT_P)
-					changeDifficulty(1);
-				if (LEFT_P)
-					changeDifficulty(-1);
+				if (controls.RIGHT_P)
+					changeDifficulty(0);
+				if (controls.LEFT_P)
+					changeDifficulty(0);
 			}
 
-			if (ACCEPT)
+			if (controls.ACCEPT)
 			{
 				selectWeek();
 			}
 		}
 
-		if (BACK && !movedBack && !selectedWeek)
+		if (controls.BACK && !movedBack && !selectedWeek)
 		{
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			movedBack = true;
@@ -327,14 +310,6 @@ class StoryMenuState extends MusicBeatState
 
 			var diffic = "";
 
-			switch (curDifficulty)
-			{
-				case 0:
-					diffic = '-easy';
-				case 2:
-					diffic = '-hard';
-			}
-
 			PlayState.storyDifficulty = curDifficulty;
 
 			PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + diffic, PlayState.storyPlaylist[0].toLowerCase());
@@ -351,8 +326,8 @@ class StoryMenuState extends MusicBeatState
 	{
 		curDifficulty += change;
 
-		if (curDifficulty < 2)
-			curDifficulty = 3;
+		if (curDifficulty < 0)
+			curDifficulty = 2;
 		if (curDifficulty > 2)
 			curDifficulty = 0;
 
@@ -436,6 +411,10 @@ class StoryMenuState extends MusicBeatState
 
 			case 'dad':
 				grpWeekCharacters.members[0].offset.set(120, 200);
+				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1));
+
+			case 'tankman':
+				grpWeekCharacters.members[0].offset.set(60,-20);
 				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1));
 
 			default:
