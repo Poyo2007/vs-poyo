@@ -72,18 +72,9 @@ class DialogueBox extends FlxSpriteGroup
 		portraitLeft.scrollFactor.set();
 		add(portraitLeft);
 		portraitLeft.visible = false;
-		
-		portraitLeft016 = new FlxSprite(-20, 40);
-		portraitLeft016.frames = Paths.getSparrowAtlas('BFport', 'shared');
-		portraitLeft016.animation.addByPrefix('enter', 'Portrait Enter instance 1', 24, false);
-		portraitLeft016.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.9));
-		portraitLeft016.updateHitbox();
-		portraitLeft016.scrollFactor.set();
-		add(portraitLeft016);
-		portraitLeft016.visible = false;
 
 		portraitRight = new FlxSprite(0, 40);
-		portraitRight.frames = Paths.getSparrowAtlas('liz/images/bfportrait', 'shared');
+		portraitRight.frames = Paths.getSparrowAtlas('portrait/BFport', 'shared');
 		portraitRight.animation.addByPrefix('enter', 'Portrait Enter instance 1', 24, false);
 		portraitRight.setGraphicSize(Std.int(portraitRight.width * PlayState.daPixelZoom * 0.9));
 		portraitRight.updateHitbox();
@@ -91,16 +82,7 @@ class DialogueBox extends FlxSpriteGroup
 		add(portraitRight);
 		portraitRight.visible = false;
 		
-		portraitRightGF = new FlxSprite(0, 40);
-		portraitRightGF.frames = Paths.getSparrowAtlas('liz/images/gfportrait', 'shared');
-		portraitRightGF.animation.addByPrefix('enter', 'Portrait Enter instance 1', 24, false);
-		portraitRightGF.setGraphicSize(Std.int(portraitRight.width * PlayState.daPixelZoom * 0.9));
-		portraitRightGF.updateHitbox();
-		portraitRightGF.scrollFactor.set();
-		add(portraitRightGF);
-		portraitRightGF.visible = false;
-		
-      box = new FlxSprite(0, 145);
+   box = new FlxSprite(-20, 45);
 		
 		var hasDialog = false;
 		switch (PlayState.SONG.song.toLowerCase())
@@ -111,7 +93,7 @@ class DialogueBox extends FlxSpriteGroup
 				box.animation.addByPrefix('normalOpen', 'Text Box Appear', 24, false);
 				box.animation.addByIndices('normal', 'Text Box Appear', [4], "", 24);
 	
-			case 'classroom':
+			case 'song1':
 				hasDialog = true;
 				box.frames = Paths.getSparrowAtlas('speech_bubble_talking', 'shared');
 				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
@@ -276,30 +258,17 @@ class DialogueBox extends FlxSpriteGroup
 		{
 			case 'dad':
 				portraitRight.visible = false;
-				portraitLeft016.visible = false;
-        portraitRightGF.visible = false;
 				if (!portraitLeft.visible)
 				{
 					portraitLeft.visible = true;
 					portraitLeft.animation.play('enter');
 				}
 			case 'bf':
-			  portraitLeft016.visible = false;
-			  portraitRightGF.visible = false;
 				portraitLeft.visible = false;
 				if (!portraitRight.visible)
 				{
 					portraitRight.visible = true;
 					portraitRight.animation.play('enter');
-				}
-			case 'gf':
-			  portraitLeft016.visible = false;
-			  portraitRight.visible = false;
-				portraitLeft.visible = false;
-				if (!portraitRightGF.visible)
-				{
-					portraitRightGF.visible = true;
-					portraitRightGF.animation.play('enter');
 				}
 		}
 	}
