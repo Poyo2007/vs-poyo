@@ -62,6 +62,8 @@ class DialogueBox extends FlxSpriteGroup
 				bgFade.alpha = 0.7;
 		}, 5);
 
+  if (curSong.toLowerCase() == 'senpai' || curSong.toLowerCase() == 'roses' || curSong.toLowerCase() == 'thorns')
+  {
 		portraitLeft = new FlxSprite(-20, 40);
 		portraitLeft.frames = Paths.getSparrowAtlas('weeb/senpaiPortrait');
 		portraitLeft.animation.addByPrefix('enter', 'Senpai Portrait Enter', 24, false);
@@ -70,7 +72,10 @@ class DialogueBox extends FlxSpriteGroup
 		portraitLeft.scrollFactor.set();
 		add(portraitLeft);
 		portraitLeft.visible = false;
+  }
 
+  if (curSong.toLowerCase() == 'senpai' || curSong.toLowerCase() == 'roses' || curSong.toLowerCase() == 'thorns')
+  {
 		portraitRight = new FlxSprite(0, 40);
 		portraitRight.frames = Paths.getSparrowAtlas('weeb/bfPortrait');
 		portraitRight.animation.addByPrefix('enter', 'Boyfriend portrait enter', 24, false);
@@ -79,9 +84,28 @@ class DialogueBox extends FlxSpriteGroup
 		portraitRight.scrollFactor.set();
 		add(portraitRight);
 		portraitRight.visible = false;
+  }
+  
+  if (curSong.toLowerCase() == 'song1')
+  {
+		var portraitRight:FlxSprite = new FlxSprite(-20, 40).loadGraphic(Paths.image('portrait/BFport', 'shared'));
+		portraitRight.updateHitbox();
+		portraitRight.scrollFactor.set();
+		add(portraitRight);
+		portraitRight.visible = false;
+  }
+  
+  if (curSong.toLowerCase() == 'song1')
+  {
+		var portraitLeft:FlxSprite = new FlxSprite().loadGraphic(Paths.image('portrait/POYOport', 'shared'));
+		portraitLeft.updateHitbox();
+		portraitLeft.scrollFactor.set();
+		add(portraitLeft);
+		portraitLeft.visible = false;
+  }
 
 		box = new FlxSprite(-20, 45);
-		
+    
 		var hasDialog = false;
 		switch (PlayState.SONG.song.toLowerCase())
 		{
@@ -97,6 +121,11 @@ class DialogueBox extends FlxSpriteGroup
 				box.frames = Paths.getSparrowAtlas('weeb/pixelUI/dialogueBox-senpaiMad');
 				box.animation.addByPrefix('normalOpen', 'SENPAI ANGRY IMPACT SPEECH', 24, false);
 				box.animation.addByIndices('normal', 'SENPAI ANGRY IMPACT SPEECH', [4], "", 24);
+			case 'song1':
+				hasDialog = true;
+				box.frames = Paths.getSparrowAtlas('speech_bubble_talking', 'shared');
+				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
+				box.animation.addByIndices('normal', 'speech bubble normal', [4], "", 24);
 
 			case 'thorns':
 				hasDialog = true;
@@ -115,7 +144,10 @@ class DialogueBox extends FlxSpriteGroup
 			return;
 		
 		box.animation.play('normalOpen');
+		if (curSong.toLowerCase() == 'senpai' || curSong.toLowerCase() == 'roses' || curSong.toLowerCase() == 'thorns')
+  {
 		box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
+  }
 		box.updateHitbox();
 		add(box);
 
@@ -251,14 +283,20 @@ class DialogueBox extends FlxSpriteGroup
 				if (!portraitLeft.visible)
 				{
 					portraitLeft.visible = true;
+				  if (!curSong.toLowercase() == 'senpai' || !curSong.toLowercase() == 'roses' || !curSong.toLowercase() == 'thorns')
+				  {
 					portraitLeft.animation.play('enter');
+				  }
 				}
 			case 'bf':
 				portraitLeft.visible = false;
 				if (!portraitRight.visible)
 				{
 					portraitRight.visible = true;
+					if (!curSong.toLowercase() == 'senpai' || !curSong.toLowercase() == 'roses' || !curSong.toLowercase() == 'thorns')
+				  {
 					portraitRight.animation.play('enter');
+				  }
 				}
 		}
 	}

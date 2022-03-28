@@ -180,6 +180,27 @@ class Character extends FlxSprite
 				addOffset("singDOWN", 0, -30);
 
 				playAnim('idle');
+			case 'poyo':
+				var tex = Paths.getSparrowAtlas('poyolmao','shared');
+				frames = tex;
+				animation.addByPrefix('idle', 'Idle', 16, false);
+				animation.addByPrefix('singUP', 'Up', 8, false);
+        animation.addByPrefix('singLEFT', 'Right', 8, false);
+				animation.addByPrefix('singRIGHT', 'Left', 8, false);
+				animation.addByPrefix('singDOWN', 'Down', 8, false);
+				animation.addByPrefix('dodge', 'Right', 8, false);
+
+				addOffset('idle');
+				addOffset("singUP", 94, -29);
+				addOffset("singRIGHT", 53, -6);
+				addOffset("singLEFT", 178, -9);
+				addOffset("singDOWN", -9, -72);
+
+				playAnim('idle');
+
+				flipX = true;
+				
+				setGraphicSize(Std.int(width * 1.1));
 			case 'spooky':
 				tex = Paths.getSparrowAtlas('spooky_kids_assets');
 				frames = tex;

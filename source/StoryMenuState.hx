@@ -23,12 +23,7 @@ class StoryMenuState extends MusicBeatState
 
 	var weekData:Array<Dynamic> = [
 		['Tutorial'],
-		['Bopeebo', 'Fresh', 'Dadbattle'],
-    ['Spookeez', 'South', 'Monster'],
-		['Pico', 'Philly', "Blammed"],
-		['Satin-Panties', "High", "Milf"],
-		['Cocoa', 'Eggnog', 'Winter-Horrorland'],
-		['Senpai', 'Roses', 'Thorns']
+    ['Song1'],
 	];
 	var curDifficulty:Int = 1;
 
@@ -46,7 +41,7 @@ class StoryMenuState extends MusicBeatState
 
 	var weekNames:Array<String> = [
 		"",
-		"Daddy Dearest",
+		"Dripped Out Fucker",
 		"Spooky Month",
 		"PICO",
 		"MOMMY MUST MURDER",

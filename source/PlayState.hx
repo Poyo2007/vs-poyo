@@ -233,6 +233,8 @@ class PlayState extends MusicBeatState
 				dialogue = CoolUtil.coolTextFile(Paths.txt('roses/rosesDialogue'));
 			case 'thorns':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('thorns/thornsDialogue'));
+			case 'song1':
+				dialogue = CoolUtil.coolTextFile(Paths.txt('song1/song1Dialogue'));
 		}
 
 		#if desktop
@@ -321,6 +323,13 @@ class PlayState extends MusicBeatState
               addSchoolEvil();
               }
 }
+            case 'song1':
+{
+              if (!nobg_isenabled)
+              {
+              addPoyoCity();
+              }
+}
 		          default:
 		          {
 		          if (!nobg_isenabled)
@@ -373,6 +382,8 @@ class PlayState extends MusicBeatState
 				dad.y += 130;
 			case 'dad':
 				camPos.x += 400;
+			case 'poyo':
+			  dad.y += 135;
 			case 'pico':
 				camPos.x += 600;
 				dad.y += 300;
@@ -596,6 +607,8 @@ class PlayState extends MusicBeatState
 						});
 					});
 				case 'senpai':
+					schoolIntro(doof);
+				case 'song1':
 					schoolIntro(doof);
 				case 'roses':
 					FlxG.sound.play(Paths.sound('ANGRY'));
@@ -1168,6 +1181,7 @@ class PlayState extends MusicBeatState
 	var canPause:Bool = true;
 	
 	  var removeoraddStage:Bool = true;
+	  var removeoraddPoyoCity:Bool = true;
 		var removeoraddSpooky:Bool = true;
 		var removeoraddPhilly:Bool = true;
 		var removeoraddLimo:Bool = true;
@@ -1221,6 +1235,24 @@ class PlayState extends MusicBeatState
 		                  else if (removeoraddStage == false)
                       {
                       remove(stageCurtains);
+                      }
+		          }
+		          
+	function addPoyoCity():Void
+		{
+		                  defaultCamZoom = 0.6;
+		                  curStage = 'poyocity';
+		                  var bg:FlxSprite = new FlxSprite(-700, -345).loadGraphic(Paths.image('city'));
+		                  bg.antialiasing = true;
+		                  bg.scrollFactor.set(0.9, 0.9);
+		                  bg.active = false;
+		                  if (removeoraddStage == true)
+		                  {
+		                  add(bg);
+		                  }
+		                  else if (removeoraddStage == false)
+                      {
+                      remove(bg);
                       }
 		          }
 		          
