@@ -63,9 +63,9 @@ class DialogueBox extends FlxSpriteGroup
 			if (bgFade.alpha > 0.7)
 				bgFade.alpha = 0.7;
 		}, 5);
-//WYXOS IF SOMETHING IS WRONG FIX IT
+
 		portraitLeft = new FlxSprite(-20, 40);
-		portraitLeft.frames = Paths.getSparrowAtlas('portrait/POYOport, 'shared');
+		portraitLeft.frames = Paths.getSparrowAtlas('portrait/POYOport', 'shared');
 		portraitLeft.animation.addByPrefix('enter', 'Portrait Enter instance 1', 24, false);
 		portraitLeft.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.9));
 		portraitLeft.updateHitbox();
