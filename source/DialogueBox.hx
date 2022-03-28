@@ -29,7 +29,9 @@ class DialogueBox extends FlxSpriteGroup
 	public var finishThing:Void->Void;
 
 	var portraitLeft:FlxSprite;
+	var portraitLeft016:FlxSprite;
 	var portraitRight:FlxSprite;
+	var portraitRightGF:FlxSprite;
 
 	var handSelect:FlxSprite;
 	var bgFade:FlxSprite;
@@ -61,51 +63,45 @@ class DialogueBox extends FlxSpriteGroup
 			if (bgFade.alpha > 0.7)
 				bgFade.alpha = 0.7;
 		}, 5);
-
-  if (PlayState.SONG.song.toLowerCase() == 'senpai' || PlayState.SONG.song.toLowerCase() == 'roses' || PlayState.SONG.song.toLowerCase() == 'thorns')
-  {
+//WYXOS IF SOMETHING IS WRONG FIX IT
 		portraitLeft = new FlxSprite(-20, 40);
-		portraitLeft.frames = Paths.getSparrowAtlas('weeb/senpaiPortrait');
-		portraitLeft.animation.addByPrefix('enter', 'Senpai Portrait Enter', 24, false);
+		portraitLeft.frames = Paths.getSparrowAtlas('portrait/POYOport, 'shared');
+		portraitLeft.animation.addByPrefix('enter', 'Portrait Enter instance 1', 24, false);
 		portraitLeft.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.9));
 		portraitLeft.updateHitbox();
 		portraitLeft.scrollFactor.set();
 		add(portraitLeft);
 		portraitLeft.visible = false;
-  }
+		
+		portraitLeft016 = new FlxSprite(-20, 40);
+		portraitLeft016.frames = Paths.getSparrowAtlas('BFport', 'shared');
+		portraitLeft016.animation.addByPrefix('enter', 'Portrait Enter instance 1', 24, false);
+		portraitLeft016.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.9));
+		portraitLeft016.updateHitbox();
+		portraitLeft016.scrollFactor.set();
+		add(portraitLeft016);
+		portraitLeft016.visible = false;
 
-  if (PlayState.SONG.song.toLowerCase() == 'senpai' || PlayState.SONG.song.toLowerCase() == 'roses' || PlayState.SONG.song.toLowerCase() == 'thorns')
-  {
 		portraitRight = new FlxSprite(0, 40);
-		portraitRight.frames = Paths.getSparrowAtlas('weeb/bfPortrait');
-		portraitRight.animation.addByPrefix('enter', 'Boyfriend portrait enter', 24, false);
+		portraitRight.frames = Paths.getSparrowAtlas('liz/images/bfportrait', 'shared');
+		portraitRight.animation.addByPrefix('enter', 'Portrait Enter instance 1', 24, false);
 		portraitRight.setGraphicSize(Std.int(portraitRight.width * PlayState.daPixelZoom * 0.9));
 		portraitRight.updateHitbox();
 		portraitRight.scrollFactor.set();
 		add(portraitRight);
 		portraitRight.visible = false;
-  }
-  
-  if (PlayState.SONG.song.toLowerCase() == 'song1')
-  {
-		var portraitRight:FlxSprite = new FlxSprite(-20, 40).loadGraphic(Paths.image('portrait/BFport', 'shared'));
-		portraitRight.updateHitbox();
-		portraitRight.scrollFactor.set();
-		add(portraitRight);
-		portraitRight.visible = false;
-  }
-  
-  if (PlayState.SONG.song.toLowerCase() == 'song1')
-  {
-		var portraitLeft:FlxSprite = new FlxSprite().loadGraphic(Paths.image('portrait/POYOport', 'shared'));
-		portraitLeft.updateHitbox();
-		portraitLeft.scrollFactor.set();
-		add(portraitLeft);
-		portraitLeft.visible = false;
-  }
-
-		box = new FlxSprite(-20, 45);
-    
+		
+		portraitRightGF = new FlxSprite(0, 40);
+		portraitRightGF.frames = Paths.getSparrowAtlas('liz/images/gfportrait', 'shared');
+		portraitRightGF.animation.addByPrefix('enter', 'Portrait Enter instance 1', 24, false);
+		portraitRightGF.setGraphicSize(Std.int(portraitRight.width * PlayState.daPixelZoom * 0.9));
+		portraitRightGF.updateHitbox();
+		portraitRightGF.scrollFactor.set();
+		add(portraitRightGF);
+		portraitRightGF.visible = false;
+		
+      box = new FlxSprite(0, 145);
+		
 		var hasDialog = false;
 		switch (PlayState.SONG.song.toLowerCase())
 		{
@@ -114,6 +110,15 @@ class DialogueBox extends FlxSpriteGroup
 				box.frames = Paths.getSparrowAtlas('weeb/pixelUI/dialogueBox-pixel');
 				box.animation.addByPrefix('normalOpen', 'Text Box Appear', 24, false);
 				box.animation.addByIndices('normal', 'Text Box Appear', [4], "", 24);
+	
+			case 'classroom':
+				hasDialog = true;
+				box.frames = Paths.getSparrowAtlas('speech_bubble_talking', 'shared');
+				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
+				box.animation.addByIndices('normal', 'speech bubble normal', [4], "", 24);
+				box.x += 50
+				box.y += 300
+
 			case 'roses':
 				hasDialog = true;
 				FlxG.sound.play(Paths.sound('ANGRY_TEXT_BOX'));
@@ -121,11 +126,6 @@ class DialogueBox extends FlxSpriteGroup
 				box.frames = Paths.getSparrowAtlas('weeb/pixelUI/dialogueBox-senpaiMad');
 				box.animation.addByPrefix('normalOpen', 'SENPAI ANGRY IMPACT SPEECH', 24, false);
 				box.animation.addByIndices('normal', 'SENPAI ANGRY IMPACT SPEECH', [4], "", 24);
-			case 'song1':
-				hasDialog = true;
-				box.frames = Paths.getSparrowAtlas('speech_bubble_talking', 'shared');
-				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
-				box.animation.addByIndices('normal', 'speech bubble normal', [4], "", 24);
 
 			case 'thorns':
 				hasDialog = true;
@@ -144,10 +144,6 @@ class DialogueBox extends FlxSpriteGroup
 			return;
 		
 		box.animation.play('normalOpen');
-		if (PlayState.SONG.song.toLowerCase() == 'senpai' || PlayState.SONG.song.toLowerCase() == 'roses' || PlayState.SONG.song.toLowerCase() == 'thorns')
-  {
-		box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
-  }
 		box.updateHitbox();
 		add(box);
 
@@ -280,23 +276,30 @@ class DialogueBox extends FlxSpriteGroup
 		{
 			case 'dad':
 				portraitRight.visible = false;
+				portraitLeft016.visible = false;
+        portraitRightGF.visible = false;
 				if (!portraitLeft.visible)
 				{
 					portraitLeft.visible = true;
-				  if (PlayState.SONG.song.toLowerCase() == 'senpai' || PlayState.SONG.song.toLowerCase() == 'roses' || PlayState.SONG.song.toLowerCase() == 'thorns')
-				  {
 					portraitLeft.animation.play('enter');
-				  }
 				}
 			case 'bf':
+			  portraitLeft016.visible = false;
+			  portraitRightGF.visible = false;
 				portraitLeft.visible = false;
 				if (!portraitRight.visible)
 				{
 					portraitRight.visible = true;
-					if (PlayState.SONG.song.toLowerCase() == 'senpai' || PlayState.SONG.song.toLowerCase() == 'roses' || PlayState.SONG.song.toLowerCase() == 'thorns')
-				  {
 					portraitRight.animation.play('enter');
-				  }
+				}
+			case 'gf':
+			  portraitLeft016.visible = false;
+			  portraitRight.visible = false;
+				portraitLeft.visible = false;
+				if (!portraitRightGF.visible)
+				{
+					portraitRightGF.visible = true;
+					portraitRightGF.animation.play('enter');
 				}
 		}
 	}
