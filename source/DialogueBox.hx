@@ -283,7 +283,7 @@ class DialogueBox extends FlxSpriteGroup
 				if (!portraitLeft.visible)
 				{
 					portraitLeft.visible = true;
-				  if (PlayState.SONG.song.toLowercase() == 'senpai' || PlayState.SONG.song.toLowercase() == 'roses' || PlayState.SONG.song.toLowercase() == 'thorns')
+				  if (PlayState.SONG.song.toLowerCase() == 'senpai' || PlayState.SONG.song.toLowerCase() == 'roses' || PlayState.SONG.song.toLowerCase() == 'thorns')
 				  {
 					portraitLeft.animation.play('enter');
 				  }
@@ -293,7 +293,7 @@ class DialogueBox extends FlxSpriteGroup
 				if (!portraitRight.visible)
 				{
 					portraitRight.visible = true;
-					if (PlayState.SONG.song.toLowercase() == 'senpai' || PlayState.SONG.song.toLowercase() == 'roses' || PlayState.SONG.song.toLowercase() == 'thorns')
+					if (PlayState.SONG.song.toLowerCase() == 'senpai' || PlayState.SONG.song.toLowerCase() == 'roses' || PlayState.SONG.song.toLowerCase() == 'thorns')
 				  {
 					portraitRight.animation.play('enter');
 				  }
